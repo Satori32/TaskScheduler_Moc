@@ -1,20 +1,10 @@
-/** /#include <stdio.h>
-#include <time.h>
+#include "TaskScheduler.h"
 
-#include "Vector.h"
-#include "String.h"
-
-struct TaskItem {
-	UTF_8 Title;
-	UTF_8 Message;
-	UTF_8 iiwake;
-	time_t Time = 0;
-	bool IsDeath = false;
-};
+// if you need one liner program. use exe() maybe in <system>.
 
 String StringFormater(char* Format, ...) {//need Free();
 	va_list V = NULL;
-	char Buff[10230] = {0,};
+	char Buff[10230] = { 0, };
 
 	va_start(V, Format);
 	sprintf(Buff, Format, V);
@@ -25,26 +15,43 @@ String StringFormater(char* Format, ...) {//need Free();
 	return S;
 }
 
+
+bool New(TaskItem& In, char* Title, char* Message,bool (*T)()) {
+	Free(In.Title);
+	Free(In.Message);
+
+
+	From(In.Title, Title, strlen(Title));
+	From(In.Message, Message, strlen(Message));
+
+	In.Time = time(NULL);
+	In.Task = T;
+	return true;
+}
 bool New(TaskItem& In, char* Title, char* Message) {
 	Free(In.Title);
 	Free(In.Message);
 
-	
-	From(In.Title,Title, strlen(Title));
-	From(In.Message,Message, strlen(Message));	
+
+	From(In.Title, Title, strlen(Title));
+	From(In.Message, Message, strlen(Message));
 
 	In.Time = time(NULL);
-	
+	In.Task = NULL;
 	return true;
+}
+bool DoTask(TaskItem& In,TaskScheduler& Self) {
+	if (In.Task == NULL) { return false; }
+	return In.Task(Self);
 }
 bool iieske(TaskItem& In, char* iiwake) {
 	UTF_8 U;
 	From(U, iiwake, strlen(iiwake));
 	Add(In.iiwake, U);
 	Free(U);
-	
+
 }
-bool IsOver(TaskItem& In,const time_t& T) {
+bool IsOver(TaskItem& In, const time_t& T) {
 	if (In.Time < T) return true;
 	return false;
 }
@@ -55,7 +62,7 @@ bool IsNowOver(TaskItem& In) {
 time_t GetTime(TaskItem& In) {
 	return In.Time;
 }
-bool SetTime(TaskItem& In, const time_t& Base,const time_t& Advance){
+bool SetTime(TaskItem& In, const time_t& Base, const time_t& Advance) {
 	In.Time = Base + Advance;
 	return true;
 }
@@ -71,12 +78,6 @@ bool Free(TaskItem& In) {
 	Free(In.Title);
 	Free(In.Message);
 }
-struct LoggerItem {
-	UTF_8 Title;
-	UTF_8 Message;
-	time_t Time = 0;
-	bool IsDeath = false;
- };
 
 bool New(LoggerItem& In, char* Title, char* Message) {
 	From(In.Title, Title, strlen(Title));
@@ -96,9 +97,6 @@ bool Free(LoggerItem& In) {
 	return true;
 }
 
-struct Logger {
-	Vector<LoggerItem> V;
-};
 
 Logger ConstructLogger() {
 	Logger L;
@@ -107,7 +105,7 @@ Logger ConstructLogger() {
 }
 
 bool Push(Logger& In, LoggerItem& B) {
-	Push(In.V,B);
+	Push(In.V, B);
 	return true;
 }
 LoggerItem* Index(Logger& In, size_t N) {
@@ -137,15 +135,11 @@ bool Free(Logger& In) {
 	return true;
 }
 
-struct TaskScheduler {
-	Vector<TaskItem> Task;
-	Logger Log;
-};
 
 TaskScheduler ConstructTaskScheduler() {
 	TaskScheduler T;
 	T.Task = ConstructVector<TaskItem>(16);
-	T.Log =  ConstructLogger();
+	T.Log = ConstructLogger();
 	return T;
 }
 bool Free(TaskScheduler& In) {
@@ -163,4 +157,3 @@ bool Free(TaskScheduler& In) {
 
 	return true;
 }
-/**/
