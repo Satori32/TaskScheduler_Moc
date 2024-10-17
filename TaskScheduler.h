@@ -34,6 +34,8 @@ struct TaskScheduler {
 String StringFormater(char* Format, ...);
 //bool DoTask(TaskItem& In, TaskScheduler& Self);
 bool DoTask(TaskItem& In);
+tm GetTimeFormated_Local(TaskItem& In);
+tm GetTimeFormated_GM(TaskItem& In);
 bool New(TaskItem& In, char* Title, char* Message);
 bool iieske(TaskItem& In, char* iiwake);
 bool IsOver(TaskItem& In, const time_t& T);

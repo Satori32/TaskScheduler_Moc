@@ -50,6 +50,12 @@ bool DoTask(TaskItem& In) {
 	if (In.Task == NULL) { return false; }
 	return In.Task();
 }
+tm GetTimeFormated_Local(TaskItem& In) {
+	return *localtime(&In.Time);
+}
+tm GetTimeFormated_GM(TaskItem& In) {
+	return *gmtime(&In.Time);
+}
 bool iieske(TaskItem& In, char* iiwake) {
 	UTF_8 U;
 	From(U, iiwake, strlen(iiwake));
