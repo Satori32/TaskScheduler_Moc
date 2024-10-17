@@ -47,6 +47,8 @@ bool Kill(TaskItem& In);
 bool IsDeath(TaskItem& In);
 bool Free(TaskItem& In);
 bool New(LoggerItem& In, char* Title, char* Message);
+tm GetTimeFormatted_GM(LoggerItem& In);
+tm GetTimeFormatted_Local(LoggerItem& In);
 bool ToKill(LoggerItem& In);
 bool Free(LoggerItem& In);
 Logger ConstructLogger();

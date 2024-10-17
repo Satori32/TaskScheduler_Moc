@@ -100,6 +100,12 @@ bool New(LoggerItem& In, char* Title, char* Message) {
 	In.Time = time(NULL);
 	return true;
 }
+tm GetTimeFormatted_GM(LoggerItem& In) {
+	return *gmtime(&In.Time);
+}
+tm GetTimeFormatted_Local(LoggerItem& In) {
+	return *localtime(&In.Time);
+}
 bool ToKill(LoggerItem& In) {
 	In.IsDeath = false;
 	return true;
