@@ -40,9 +40,15 @@ bool New(TaskItem& In, char* Title, char* Message) {
 	In.Task = NULL;
 	return true;
 }
+/** /
 bool DoTask(TaskItem& In,TaskScheduler& Self) {
 	if (In.Task == NULL) { return false; }
 	return In.Task(Self);
+}
+/**/
+bool DoTask(TaskItem& In) {
+	if (In.Task == NULL) { return false; }
+	return In.Task();
 }
 bool iieske(TaskItem& In, char* iiwake) {
 	UTF_8 U;

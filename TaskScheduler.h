@@ -11,7 +11,8 @@ struct TaskItem {
 	UTF_8 iiwake;
 	time_t Time = 0;
 	bool IsDeath = false;
-	bool (*Task)(TaskScheduler&)=NULL;
+//	bool (*Task)(TaskScheduler&)=NULL;
+ 	bool (*Task)()=NULL;
 };
 
 struct LoggerItem {
@@ -31,6 +32,8 @@ struct TaskScheduler {
 };
 
 String StringFormater(char* Format, ...);
+//bool DoTask(TaskItem& In, TaskScheduler& Self);
+bool DoTask(TaskItem& In);
 bool New(TaskItem& In, char* Title, char* Message);
 bool iieske(TaskItem& In, char* iiwake);
 bool IsOver(TaskItem& In, const time_t& T);
