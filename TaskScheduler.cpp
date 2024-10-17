@@ -14,7 +14,9 @@ String StringFormater(char* Format, ...) {//need Free();
 
 	return S;
 }
-
+time_t GetTimeByStruct(tm& In) {
+	return mktime(&In);
+}
 
 bool New(TaskItem& In, char* Title, char* Message,bool (*T)()) {
 	Free(In.Title);
@@ -56,6 +58,7 @@ tm GetTimeFormated_Local(TaskItem& In) {
 tm GetTimeFormated_GM(TaskItem& In) {
 	return *gmtime(&In.Time);
 }
+
 bool iieske(TaskItem& In, char* iiwake) {
 	UTF_8 U;
 	From(U, iiwake, strlen(iiwake));

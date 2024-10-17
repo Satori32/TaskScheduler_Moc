@@ -32,6 +32,7 @@ struct TaskScheduler {
 };
 
 String StringFormater(char* Format, ...);
+time_t GetTimeByStruct(tm& In);
 //bool DoTask(TaskItem& In, TaskScheduler& Self);
 bool DoTask(TaskItem& In);
 tm GetTimeFormated_Local(TaskItem& In);
