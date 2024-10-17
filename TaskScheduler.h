@@ -5,6 +5,8 @@
 #include "Vector.h"
 #include "String.h"
 
+typedef tm TimeStruct;// if you need
+
 struct TaskItem {
 	UTF_8 Title;
 	UTF_8 Message;
@@ -58,5 +60,4 @@ LoggerItem* Back(Logger& In);
 bool Free(Logger& In);
 TaskScheduler ConstructTaskScheduler();
 bool Free(TaskScheduler& In);
-
-
+bool SortByTime(TaskScheduler& In);

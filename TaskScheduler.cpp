@@ -17,7 +17,18 @@ String StringFormater(char* Format, ...) {//need Free();
 time_t GetTimeByStruct(tm& In) {
 	return mktime(&In);
 }
+bool New(TaskItem& In, char* Title, char* Message,bool (*T)(),time_t Time) {
+	Free(In.Title);
+	Free(In.Message);
 
+
+	From(In.Title, Title, strlen(Title));
+	From(In.Message, Message, strlen(Message));
+
+	In.Time = Time;
+	In.Task = T;
+	return true;
+}
 bool New(TaskItem& In, char* Title, char* Message,bool (*T)()) {
 	Free(In.Title);
 	Free(In.Message);
@@ -28,6 +39,17 @@ bool New(TaskItem& In, char* Title, char* Message,bool (*T)()) {
 
 	In.Time = time(NULL);
 	In.Task = T;
+	return true;
+}bool New(TaskItem& In, char* Title, char* Message,time_t Time) {
+	Free(In.Title);
+	Free(In.Message);
+
+
+	From(In.Title, Title, strlen(Title));
+	From(In.Message, Message, strlen(Message));
+
+	In.Time = Time;
+	In.Task = NULL;
 	return true;
 }
 bool New(TaskItem& In, char* Title, char* Message) {
@@ -41,7 +63,8 @@ bool New(TaskItem& In, char* Title, char* Message) {
 	In.Time = time(NULL);
 	In.Task = NULL;
 	return true;
-}
+}template<class T>
+
 /** /
 bool DoTask(TaskItem& In,TaskScheduler& Self) {
 	if (In.Task == NULL) { return false; }
@@ -81,7 +104,10 @@ bool SetTime(TaskItem& In, const time_t& Base, const time_t& Advance) {
 	In.Time = Base + Advance;
 	return true;
 }
-
+bool SetTime(TaskItem& In, const time_t& Time) {
+	In.Time = Time;
+	return true;
+}
 bool Kill(TaskItem& In) {
 	In.IsDeath = true;
 	return true;
@@ -177,4 +203,20 @@ bool Free(TaskScheduler& In) {
 	Free(In.Log.V);
 
 	return true;
+}
+bool Swap(T& A, T& B) {
+	T C = A;
+	A = B;
+	B = C;
+
+	return true;
+}
+bool SortByTime(TaskScheduler& In) {
+	for (size_t i = 0; i < Size(In.Task); i++) {
+		for (size_t j = i + 1; j < Size(In.Task)-1; j++) {
+			if ((*Index(In.Task, i)) < (*Index(In.Task, j))) {
+				Swap((*Index(In.Task, i)), (*Index(In.Task, j));
+			}
+		}
+	}
 }
