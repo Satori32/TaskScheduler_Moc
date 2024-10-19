@@ -133,13 +133,13 @@ tm GetTimeFormatted_Local(LoggerItem& In) {
 	return *localtime(&In.Time);
 }
 bool ToKill(LoggerItem& In) {
-	In.IsDeath = false;
+	Now(In.T) = false;
 	return true;
 }
 bool Free(LoggerItem& In) {
 	Free(In.Title);
 	Free(In.Message);
-	In.IsDeath = true;
+	ToOff(In.T);
 	In.Time = NULL;
 	return true;
 }
@@ -159,7 +159,7 @@ LoggerItem* Index(Logger& In, size_t N) {
 	size_t DC = 0;
 	for (size_t i = 0; i < Size(In.V); i++) {
 		if (Index(In.V, i) == NULL) { return NULL; }
-		if (Index(In.V, i)->IsDeath) { DC++;  continue; }
+		if (IsOff(Index(In.V, i)->T)==true) { DC++;  continue; }
 		if ((i - DC) == N) { return Index(In.V, i); }
 	}
 	return NULL;
@@ -168,7 +168,7 @@ LoggerItem* Index(Logger& In, size_t N) {
 LoggerItem* Back(Logger& In) {
 	for (intmax_t i = Size(In.V) - 1; i >= 0; i--) {
 		if (Index(In.V, i) == NULL) { return NULL; }
-		if (Index(In.V, i)->IsDeath != true) { return Index(In.V, i); }
+		if (IsOff((Index(In.V, i)->T) == true) { return Index(In.V, i); }
 	}
 
 	return NULL;

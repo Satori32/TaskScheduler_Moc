@@ -4,6 +4,7 @@
 
 #include "Vector.h"
 #include "String.h"
+#include "ToggleSwitch.h"
 
 typedef tm TimeStruct;// if you need
 
@@ -21,7 +22,8 @@ struct LoggerItem {
 	UTF_8 Title;
 	UTF_8 Message;
 	time_t Time = 0;
-	bool IsDeath = false;
+	//bool IsDeath = false;
+	ToggleSwitch T;// Off Is kill log
 };
 
 struct Logger {
