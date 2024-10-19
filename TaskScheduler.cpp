@@ -159,7 +159,7 @@ LoggerItem* Index(Logger& In, size_t N) {
 	size_t DC = 0;
 	for (size_t i = 0; i < Size(In.V); i++) {
 		if (Index(In.V, i) == NULL) { return NULL; }
-		if (Index(In.V, i)->IsDeath) { DC++; }
+		if (Index(In.V, i)->IsDeath) { DC++;  continue; }
 		if ((i - DC) == N) { return Index(In.V, i); }
 	}
 	return NULL;
@@ -204,7 +204,8 @@ bool Free(TaskScheduler& In) {
 
 	return true;
 }
-bool Swap(T& A, T& B) {
+template<class T>
+bool Swap(T A, T B) {
 	T C = A;
 	A = B;
 	B = C;
@@ -214,7 +215,7 @@ bool Swap(T& A, T& B) {
 bool SortByTime(TaskScheduler& In) {
 	for (size_t i = 0; i < Size(In.Task); i++) {
 		for (size_t j = i + 1; j < Size(In.Task)-1; j++) {
-			if ((*Index(In.Task, i)) < (*Index(In.Task, j))) {
+			if ((*Index(In.Task, i)->Time) < (*Index(In.Task, j))->Time) {
 				Swap((*Index(In.Task, i)), (*Index(In.Task, j));
 			}
 		}
